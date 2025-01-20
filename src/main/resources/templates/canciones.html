@@ -355,10 +355,12 @@
         // Función para reproducir la canción
         function reproducirAudio(nombre) {
             // Detener la reproducción de la canción actual si hay alguna en reproducción
-            if (audioActual && !audioActual.paused) {
+            if (audioActual !== null) {
+                console.log(audioActual);
+                
                 audioActual.pause();
                 audioActual.currentTime = 0; // Resetea la posición al inicio
-                console.log(`Canción detenida: ${audioActual.id}`);
+                console.log(`Canción detenida desde player: ${audioActual.src}`);
             }
 
             // Obtener el nuevo audio y reproducirlo
@@ -373,10 +375,10 @@
 
         // Función para detener el audio actual
         function detenerAudio() {
-            if (audioActual) {
+            if (audioActual instanceof HTMLAudioElement) {
                 audioActual.pause();
                 audioActual.currentTime = 0; // Resetea la posición al inicio
-                console.log(`Canción detenida: ${audioActual.id}`);
+                console.log(`Canción detenida: ${audioActual.src}`);
             }
         }
 
@@ -401,26 +403,26 @@
                     //     .toLowerCase();
 
                     fila.innerHTML = `
-                <td class="nombre-cancion">
-                    <img src="/images/${cancion.nombre}.jpg" class="caratula">
-                    <span>${cancion.nombre}</span>
-                </td>
-                <td>${cancion.autor}</td>
-                <td>${cancion.duracion}</td>
-                <td class="estado-animo">${cancion.estadoAnimo}</td>
-                <td class="buttons">
-                    <button class="button reproducir-btn">Reproducir</button>
-                    <button class="button detener-btn">Detener</button>
-                    <button class="button guardar-btn">Guardar</button>
-                    <audio controls>
-                        <source 
-                            id="audio_${cancion.nombre}" 
-                            src="/mp3/${cancion.nombre}.mp3"
-                        >
-                        Tu navegador no soporta el elemento de audio.
-                    </audio>
-                </td>
-            `;
+                        <td class="nombre-cancion">
+                            <img src="/images/${cancion.nombre}.jpg" class="caratula">
+                            <span>${cancion.nombre}</span>
+                        </td>
+                        <td>${cancion.autor}</td>
+                        <td>${cancion.duracion}</td>
+                        <td class="estado-animo">${cancion.estadoAnimo}</td>
+                        <td class="buttons">
+                            <button class="button reproducir-btn">Reproducir</button>
+                            <button class="button detener-btn">Detener</button>
+                            <button class="button guardar-btn">Guardar</button>
+                            <audio controls>
+                                <source 
+                                    id="audio_${cancion.nombre}" 
+                                    src="/mp3/${cancion.nombre}.mp3"
+                                >
+                                Tu navegador no soporta el elemento de audio.
+                            </audio>
+                        </td>
+                    `;
 
                     // Asignar listeners a los botones
                     const guardarBtn = fila.querySelector(".guardar-btn");
