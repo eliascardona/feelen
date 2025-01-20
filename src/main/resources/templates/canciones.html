@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="'Canciones: ' + ${estadoAnimo}">Canciones</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #111;
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header {
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding: 10px 20px;
+            background-color: #0e0e0e;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+        }
+
+        header img {
+            width: 150px;
+        }
+
+        .back-button {
+            color: #fff;
+            font-size: 30px;
+            text-decoration: none;
+            padding: 10px;
+            background-color: #666;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #00b0ff;
+        }
+
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex: 1;
+            width: 100%;
+            padding-top: 80px;
+            z-index: 2;
+            position: relative;
+        }
+
+        .menu-container {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            width: 90%;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 5;
+        }
+
+        h1 {
+            color: #00b0ff;
+            font-size: 2rem;
+            /* Título más pequeño */
+            margin-bottom: 2rem;
+            letter-spacing: 4px;
+        }
+
+        p {
+            color: #bbb;
+            margin-bottom: 2rem;
+        }
+
+        table {
+            width: 100%;
+            /* Tabla extendida horizontalmente */
+            margin: 20px 0;
+            border-collapse: collapse;
+            background-color: #333;
+            color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        table th,
+        table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        table th {
+            background-color: #4CAF50;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #444;
+        }
+
+        table tr:hover {
+            background-color: #555;
+        }
+
+        .estado-animo {
+            font-weight: bold;
+            color: #aaa;
+        }
+
+        .caratula {
+            width: 30px;
+            height: 30px;
+            object-fit: cover;
+            margin-right: 10px;
+        }
+
+        .nombre-cancion {
+            display: flex;
+            align-items: center;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .button {
+            padding: 5px 10px;
+            font-size: 14px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+
+        /* Efecto visual con figuras geométricas */
+        .geometric-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .neuron-line {
+            position: absolute;
+            border-top: 2px solid #00b0ff;
+            width: 100%;
+            height: 2px;
+            top: 0;
+            animation: neuron 6s infinite ease-in-out;
+        }
+
+        .neuron-line:nth-child(1) {
+            top: 10%;
+            animation-delay: 0s;
+        }
+
+        .neuron-line:nth-child(2) {
+            top: 30%;
+            animation-delay: 1s;
+        }
+
+        .neuron-line:nth-child(3) {
+            top: 50%;
+            animation-delay: 2s;
+        }
+
+        .neuron-line:nth-child(4) {
+            top: 70%;
+            animation-delay: 3s;
+        }
+
+        .neuron-line:nth-child(5) {
+            top: 90%;
+            animation-delay: 4s;
+        }
+
+        .heart {
+            position: absolute;
+            border: 2px solid #ff6f00;
+            width: 30px;
+            height: 30px;
+            top: 40%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            clip-path: polygon(50% 0%, 0% 38%, 50% 100%, 100% 38%);
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes neuron {
+            0% {
+                left: -20%;
+                width: 60%;
+                transform: translateY(0) rotate(0deg);
+            }
+
+            25% {
+                left: 10%;
+                width: 70%;
+                transform: translateY(15%) rotate(45deg);
+            }
+
+            50% {
+                left: 50%;
+                width: 80%;
+                transform: translateY(-20%) rotate(90deg);
+            }
+
+            75% {
+                left: 90%;
+                width: 70%;
+                transform: translateY(10%) rotate(135deg);
+            }
+
+            100% {
+                left: 120%;
+                width: 60%;
+                transform: translateY(0) rotate(180deg);
+            }
+        }
+
+        @keyframes heartbeat {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <a href="javascript:history.back()" class="back-button">←</a>
+        <img src="logo.png" alt="Stay Feelen Logo">
+    </header>
+
+    <div class="geometric-shapes">
+        <div class="neuron-line"></div>
+        <div class="neuron-line"></div>
+        <div class="neuron-line"></div>
+        <div class="neuron-line"></div>
+        <div class="neuron-line"></div>
+        <div class="heart"></div>
+    </div>
+
+    <main>
+        <div class="menu-container">
+            <h1 th:text="'Canciones: ' + ${estadoAnimo}"></h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Autor</th>
+                        <th>Duración</th>
+                        <th>Estado de Ánimo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaCanciones">
+                    <!-- <tr th:each="cancion : ${canciones}">
+                        <td class="nombre-cancion">
+                            <img th:src="'/images/' + ${cancion.nombre} + '.jpg'" class="caratula">
+                            <span th:text="${cancion.nombre}"></span>
+                        </td>
+                        <td th:text="${cancion.autor}"></td>
+                        <td th:text="${cancion.duracion}"></td>
+                        <td class="estado-animo" th:text="${cancion.estadoAnimo}"></td>
+                        <td class="buttons">
+                            <button class="button" th:data-nombre="${cancion.nombre}" th:data-autor="${cancion.autor}"
+                                onclick="guardarCancion(this)">
+                                Guardar
+                            </button>
+                            <button class="button" th:data-nombre="${cancion.nombre}" onclick="reproducirAudio(this)">
+                                Reproducir
+                            </button>
+                            <audio id="" th:id="'audio_' + ${cancion.nombre}"
+                                th:src="'/mp3/' + ${cancion.nombre} + '.mp3'" hidden></audio>
+                        </td>
+                    </tr> -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <div class="footer">
+        <p>&copy; 2025 Stay Feelen. Todos los derechos reservados.</p>
+    </div>
+
+    <script defer>
+        const tablaCanciones = document.getElementById("tablaCanciones");
+
+        /** 
+         * @comment
+         * La función getCanciones() realiza una solicitud HTTP
+         * a un endpoint que tiene detrás a un RESTController de SpringBoot.
+         * Dicho endpoint devuelve un JSON con las canciones disponibles.
+        */
+        const getCanciones = async () => {
+            try {
+                const r = await fetch("/api/menu/explorar-canciones", {
+                    method: "GET"
+                });
+                const j = await r.json();
+                if (j != null) {
+                    if (Array.isArray(j.payload) && j.payload.length > 0) {
+                        return j.payload;
+                    }
+                    console.log("la carga útil está vacía o no es un array");
+                    return j.payload;
+                }
+                return [];
+            } catch (e) {
+                return `${e.message}`;
+            }
+        };
+
+        // Variable global para almacenar el audio actualmente en reproducción
+        let audioActual = null;
+
+        // Función para reproducir la canción
+        function reproducirAudio(nombre) {
+            // Detener la reproducción de la canción actual si hay alguna en reproducción
+            if (audioActual && !audioActual.paused) {
+                audioActual.pause();
+                audioActual.currentTime = 0; // Resetea la posición al inicio
+                console.log(`Canción detenida: ${audioActual.id}`);
+            }
+
+            // Obtener el nuevo audio y reproducirlo
+            const audioPlayer = document.getElementById(`player-${nombre}`);
+            if (audioPlayer) {
+                const audio = audioPlayer.querySelector("audio");
+                audio.play();
+                audioActual = audio;  // Guardamos la referencia del audio actual
+                console.log(`Reproduciendo: ${nombre}`);
+            }
+        }
+
+        // Función para detener el audio actual
+        function detenerAudio() {
+            if (audioActual) {
+                audioActual.pause();
+                audioActual.currentTime = 0; // Resetea la posición al inicio
+                console.log(`Canción detenida: ${audioActual.id}`);
+            }
+        }
+
+        // Función para agregar la canción a la lista de reproducción
+        function guardarCancion(nombre) {
+            console.log(`Canción añadida a la lista: ${nombre}`);
+            // Lógica adicional para añadir la canción a la playlist
+        }
+
+        // Manejo de canciones y generación de la tabla
+        async function cargarCanciones() {
+            const canciones = await getCanciones();
+
+            if (canciones != null) {
+                console.log(canciones);
+
+                canciones.forEach((cancion) => {
+
+                    const fila = document.createElement("tr");
+                    // const nombre = cancion.nombre.replace(" ", "_")
+                    //     .replace(/[^a-zA-Z0-9_]/g, "")
+                    //     .toLowerCase();
+
+                    fila.innerHTML = `
+                <td class="nombre-cancion">
+                    <img src="/images/${cancion.nombre}.jpg" class="caratula">
+                    <span>${cancion.nombre}</span>
+                </td>
+                <td>${cancion.autor}</td>
+                <td>${cancion.duracion}</td>
+                <td class="estado-animo">${cancion.estadoAnimo}</td>
+                <td class="buttons">
+                    <button class="button reproducir-btn">Reproducir</button>
+                    <button class="button detener-btn">Detener</button>
+                    <button class="button guardar-btn">Guardar</button>
+                    <audio controls>
+                        <source 
+                            id="audio_${cancion.nombre}" 
+                            src="/mp3/${cancion.nombre}.mp3"
+                        >
+                        Tu navegador no soporta el elemento de audio.
+                    </audio>
+                </td>
+            `;
+
+                    // Asignar listeners a los botones
+                    const guardarBtn = fila.querySelector(".guardar-btn");
+                    const reproducirBtn = fila.querySelector(".reproducir-btn");
+                    const detenerBtn = fila.querySelector(".detener-btn");
+
+                    guardarBtn.addEventListener("click", () => {
+                        guardarCancion(cancion);
+                    });
+
+                    reproducirBtn.addEventListener("click", () => {
+                        reproducirAudio(cancion.nombre);
+                    });
+
+                    detenerBtn.addEventListener("click", () => {
+                        detenerAudio();
+                    });
+
+
+
+                    tablaCanciones.appendChild(fila);
+                });
+            }
+        };
+
+        // Cargar las canciones al cargar el script
+        cargarCanciones();
+    </script>
+
+</body>
+
+</html>

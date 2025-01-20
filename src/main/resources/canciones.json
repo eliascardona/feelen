@@ -1,0 +1,17 @@
+{
+  "canciones": [
+    { "nombre": "Daniel-Dellsteiv-100am", "autor": "Daniel Dellsteiv", "duracion": "3:48", "estadoAnimo": "Triste" },
+    { "nombre": "Eels - I Need Some Sleep", "autor": "Eels", "duracion": "2:28", "estadoAnimo": "Triste" },
+    { "nombre": "Foreigner - I Want to Know What Love Is", "autor": "Foreigner", "duracion": "5:00", "estadoAnimo": "Amor" },
+    { "nombre": "Lil Jon DJ Snake - Turn Down for What", "autor": "Lil Jon, DJ Snake", "duracion": "3:35", "estadoAnimo": "Agresivo" },
+    { "nombre": "Luis Miguel - Entregate", "autor": "Luis Miguel", "duracion": "4:23", "estadoAnimo": "Amor" },
+    { "nombre": "Martin Garrix - Animals", "autor": "Martin Garrix", "duracion": "2:52", "estadoAnimo": "Agresivo" },
+    { "nombre": "Mijares - Para Amarnos Mas", "autor": "Mijares", "duracion": "3:27", "estadoAnimo": "Amor" },
+    { "nombre": "Mike Posner - I Took A Pill In Ibiza (Seeb Remix)", "autor": "Mike Posner", "duracion": "3:09", "estadoAnimo": "Feliz" },
+    { "nombre": "Selena - Dreaming Of You", "autor": "Selena", "duracion": "5:14", "estadoAnimo": "Triste" },
+    { "nombre": "Shakira - Try Everything", "autor": "Selena", "duracion": "4:42", "estadoAnimo": "Feliz" },
+    { "nombre": "Skrillex - All I Ask of You (feat. Penny)", "autor": "Skrillex", "duracion": "5:40", "estadoAnimo": "Feliz" },
+    { "nombre": "Skrillex - Make It Bun Dem", "autor": "Skrillex & Damian Marley", "duracion": "3:33", "estadoAnimo": "Agresivo" },
+    { "nombre": "Wisin & Yandel feat. Jennifer Lopez - Follow The Leader", "autor": "Wisin & Yandel feat. Jennifer Lopez", "duracion": "4:01", "estadoAnimo": "Feliz" }
+  ]
+}

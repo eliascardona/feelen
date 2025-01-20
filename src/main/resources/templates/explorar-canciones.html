@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Explorar Canciones</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #111;
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow-y: auto;
+        }
+
+        header {
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding: 10px 20px;
+            background-color: #0e0e0e;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+        }
+
+        header img {
+            width: 150px;
+        }
+
+        .back-button {
+            color: #fff;
+            font-size: 30px;
+            text-decoration: none;
+            padding: 10px;
+            background-color: #666;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #00b0ff;
+        }
+
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex: 1;
+            width: 100%;
+            padding-top: 200px;
+        }
+
+        .container {
+            margin: 20px auto;
+            max-width: 900px;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 5;
+        }
+
+        h1 {
+            color: #00b0ff;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            letter-spacing: 4px;
+        }
+
+        p {
+            color: #bbb;
+            margin-bottom: 2rem;
+        }
+
+        .estado-animo {
+            font-weight: bold;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        li {
+            width: 45%;
+            background-color: #1c1c1c;
+            border: 1px solid #444;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px;
+            transition: all 0.3s ease;
+        }
+
+        li:hover {
+            background-color: #333;
+            transform: translateY(-5px);
+        }
+
+        li img {
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        li h3 {
+            font-size: 1.2rem;
+            color: #00b0ff;
+            margin: 0;
+        }
+
+        li p {
+            color: #bbb;
+        }
+
+        li .estado-animo {
+            font-weight: bold;
+            color: #ff6f00;
+            margin-top: 10px;
+        }
+
+        .audio-player {
+            margin-top: 10px;
+            display: none;
+        }
+
+        .button {
+            padding: 10px 20px;
+            background-color: #ff6f00;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 10px;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #00b0ff;
+        }
+
+        .footer {
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            text-align: center;
+            padding: 15px 0;
+            background-color: #0e0e0e;
+            color: #888;
+        }
+
+        /* Efecto visual con figuras geométricas */
+        .geometric-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .neuron-line {
+            position: absolute;
+            border-top: 2px solid #00b0ff;
+            width: 100%;
+            height: 2px;
+            top: 0;
+            animation: neuron 6s infinite ease-in-out;
+        }
+
+        .neuron-line:nth-child(1) {
+            top: 10%;
+            animation-delay: 0s;
+        }
+
+        .neuron-line:nth-child(2) {
+            top: 30%;
+            animation-delay: 1s;
+        }
+
+        .neuron-line:nth-child(3) {
+            top: 50%;
+            animation-delay: 2s;
+        }
+
+        .neuron-line:nth-child(4) {
+            top: 70%;
+            animation-delay: 3s;
+        }
+
+        .neuron-line:nth-child(5) {
+            top: 90%;
+            animation-delay: 4s;
+        }
+
+        .heart {
+            position: absolute;
+            border: 2px solid #ff6f00;
+            width: 30px;
+            height: 30px;
+            top: 40%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            clip-path: polygon(50% 0%, 0% 38%, 50% 100%, 100% 38%);
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes neuron {
+            0% {
+                left: -20%;
+                width: 60%;
+                transform: translateY(0) rotate(0deg);
+            }
+
+            25% {
+                left: 10%;
+                width: 70%;
+                transform: translateY(15%) rotate(45deg);
+            }
+
+            50% {
+                left: 50%;
+                width: 80%;
+                transform: translateY(-20%) rotate(90deg);
+            }
+
+            75% {
+                left: 90%;
+                width: 70%;
+                transform: translateY(10%) rotate(135deg);
+            }
+
+            100% {
+                left: 120%;
+                width: 60%;
+                transform: translateY(0) rotate(180deg);
+            }
+        }
+
+        @keyframes heartbeat {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <a href="javascript:history.back()" class="back-button">←</a>
+        <img src="logo.png" alt="Stay Feelen Logo">
+    </header>
+
+    <div class="geometric-shapes">
+        <div class="neuron-line"></div>
+        <div class="neuron-line"></div>
+        <div class="neuron-line"></div>
+        <div class="neuron-line"></div>
+        <div class="neuron-line"></div>
+        <div class="heart"></div>
+    </div>
+
+    <main>
+        <div class="container">
+            <h1>Explora nuestras últimas canciones</h1>
+            <ul id="listaCanciones"></ul>
+            <!-- <ul>
+                <li th:each="cancion : ${canciones}">
+                    <img th:src="@{'/images/' + ${cancion.nombre.replace(' ', '_').replaceAll('[^a-zA-Z0-9_]', '').toLowerCase()} + '.jpg'}" alt="Carátula de la canción">
+                    <div>
+                        <h3 th:text="${cancion.nombre}"></h3>
+                        <p th:text="'Autor: ' + ${cancion.autor}"></p>
+                        <p th:text="'Duración: ' + ${cancion.duracion}"></p>
+                        <p class="estado-animo" th:text="'Estado de ánimo: ' + ${cancion.estadoAnimo}"></p>
+                    </div>
+                    <button onclick="playAudio('${cancion.nombre.replace(' ', '_')}'); return false;" class="button">Reproducir</button>
+                    <button onclick="addToPlaylist('${cancion.nombre.replace(' ', '_')}'); return false;" class="button">Añadir a Playlist</button>
+                    <div class="audio-player" id="player-${cancion.nombre.replace(' ', '_')}" style="display:none;">
+                        <audio controls>
+                            <source th:src="@{'/mp3/' + ${cancion.nombre.replace(' ', '_')} + '.mp3'}" type="audio/mpeg">
+                            Tu navegador no soporta el elemento de audio.
+                        </audio>
+                    </div>
+                </li>
+            </ul> -->
+        </div>
+    </main>
+
+    <div class="footer">
+        <p>&copy; 2025 Stay Feelen. Todos los derechos reservados.</p>
+    </div>
+
+    <script defer>
+        const listaCanciones = document.getElementById("listaCanciones");
+
+        /** 
+         * @comment
+         * La función getCanciones() realiza una solicitud HTTP
+         * a un endpoint que tiene detrás a un RESTController de SpringBoot.
+         * Dicho endpoint devuelve un JSON con las canciones disponibles.
+        */
+        const getCanciones = async () => {
+            try {
+                const r = await fetch("/api/menu/explorar-canciones", {
+                    method: "GET"
+                });
+                const j = await r.json();
+                if (j != null) {
+                    if (Array.isArray(j.payload) && j.payload.length > 0) {
+                        return j.payload;
+                    }
+                    console.log("la carga útil está vacía o no es un array");
+                    return [];
+                }
+                return [];
+            } catch (e) {
+                if (e instanceof Error) {
+                    console.error(e.message);
+                    return [];
+                }
+                return [];
+            }
+        };
+
+        // Variable global para almacenar el audio actualmente en reproducción
+        let audioActual = null;
+
+        // Función para reproducir la canción
+        function reproducirAudio(nombre) {
+            // Detener la reproducción de la canción actual si hay alguna en reproducción
+            if (audioActual !== null) {
+                console.log(audioActual);
+                
+                audioActual.pause();
+                audioActual.currentTime = 0; // Resetea la posición al inicio
+                console.log(`Canción detenida desde player: ${audioActual.src}`);
+            }
+
+            // Obtener el nuevo audio y reproducirlo
+            const audioPlayer = document.getElementById(`player-${nombre}`);
+            if (audioPlayer) {
+                const audio = audioPlayer.querySelector("audio");
+                audio.play();
+                audioActual = audio;  // Guardamos la referencia del audio actual
+                console.log(`Reproduciendo: ${nombre}`);
+            }
+        }
+
+        // Función para detener el audio actual
+        function detenerAudio() {
+            if (audioActual instanceof HTMLAudioElement) {
+                audioActual.pause();
+                audioActual.currentTime = 0; // Resetea la posición al inicio
+                console.log(`Canción detenida: ${audioActual.src}`);
+            }
+        }
+
+        // Función para agregar la canción a la lista de reproducción
+        function guardarCancion(nombre) {
+            console.log(`Canción añadida a la lista: ${nombre}`);
+            // Lógica adicional para añadir la canción a la playlist
+        }
+
+        // Función principal para cargar las canciones
+        async function cargarCanciones() {
+            const canciones = await getCanciones();  // Esperar a que las canciones sean cargadas
+
+            if (canciones != null) {
+                console.log(canciones);
+
+                // Generar dinámicamente los elementos de la lista
+                canciones.forEach((cancion) => {
+                    const item = document.createElement("li");
+
+                    // const nombre = cancion.nombre
+                    //     .replace(" ", "_")
+                    //     .replace(/[^a-zA-Z0-9_]/g, "")
+                    //     .toLowerCase();
+
+                    item.innerHTML = `
+                        <img src="/images/${cancion.nombre}.jpg" alt="Carátula de la canción">
+                        <div>
+                            <h3>nombre ${cancion.nombre}</h3>
+                            <p>Autor: ${cancion.autor}</p>
+                            <p>Duración: ${cancion.duracion}</p>
+                            <p class="estado-animo">Estado de ánimo: ${cancion.estadoAnimo}</p>
+                        </div>
+                        <a href="#" class="button reproducir-btn">Reproducir</a>
+                        <a href="#" class="button detener-btn">Detener</a>
+                        <button class="button añadir-btn">Añadir a Playlist</button>
+                        <div class="audio-player" id="player-${cancion.nombre}" style="display:none;">
+                            <audio controls>
+                                <source 
+                                    id="audio_${cancion.nombre}" 
+                                    src="/mp3/${cancion.nombre}.mp3"
+                                >
+                                Tu navegador no soporta el elemento de audio.
+                            </audio>
+                        </div>
+                    `;
+
+                    listaCanciones.appendChild(item);
+
+                    // Asociar funciones a los botones
+                    const reproducirBtn = item.querySelector(".reproducir-btn");
+                    const detenerBtn = item.querySelector(".detener-btn");
+                    const anadirBtn = item.querySelector(".añadir-btn");
+
+                    reproducirBtn.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        reproducirAudio(cancion.nombre);
+                    });
+
+                    detenerBtn.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        detenerAudio();
+                    });
+
+                    anadirBtn.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        guardarCancion(cancion.nombre);
+                    });
+                });
+            }
+        }
+
+        // Llamar a la función para cargar las canciones
+        cargarCanciones();
+    </script>
+
+
+</body>
+
+</html>

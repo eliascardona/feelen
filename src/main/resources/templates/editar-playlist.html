@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Playlist</title>
+</head>
+<body>
+    <h1>Editar Playlist - <span th:text="${playlist.nombre}"></span></h1>
+    
+    <form th:action="@{/menu/eliminar-cancion-de-playlist}" method="post">
+        <input type="hidden" name="playlistId" th:value="${playlist.id}" />
+        
+        <h3>Canciones en la Playlist:</h3>
+        <ul>
+            <li th:each="cancion : ${canciones}">
+                <input type="checkbox" name="cancionIds" th:value="${cancion.id}" /> 
+                <span th:text="${cancion.nombre}"></span>
+            </li>
+        </ul>
+        
+        <button type="submit">Eliminar Canciones Seleccionadas</button>
+    </form>
+
+    <a href="/menu/ver-playlists">Volver a Playlists</a>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Seleccionar Playlist</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .playlist-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        h1 {
+            color: #333;
+        }
+        .playlist-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        .playlist-card {
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .playlist-card:hover {
+            transform: scale(1.05);
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+    </style>
+</head>
+<body>
+    <div class="playlist-container">
+        <h1>Selecciona una Playlist</h1>
+        <div class="playlist-grid">
+            <a th:href="@{/menu/playlist-detalle(Feliz)}" class="playlist-card">Feliz</a>
+            <a th:href="@{/menu/playlist-detalle(Triste)}" class="playlist-card">Triste</a>
+            <a th:href="@{/menu/playlist-detalle(Agresivo)}" class="playlist-card">Agresivo</a>
+            <a th:href="@{/menu/playlist-detalle(Amor)}" class="playlist-card">Amor</a>
+        </div>
+    </div>
+</body>
+</html>

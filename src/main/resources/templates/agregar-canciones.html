@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Agregar Canciones</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .song-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .song-list {
+            list-style: none;
+            padding: 0;
+        }
+        .song-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .song-item:last-child {
+            border-bottom: none;
+        }
+        .add-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="song-container">
+        <h1 th:text="'Canciones para ' + ${estadoAnimo}"></h1>
+        <form 
+            method="post"
+            th:action="@{/menu/playlist-detalle/agregar}"
+            id="form"
+        >
+            <input type="hidden" th:value="${playlistId}" name="playlistId" />
+            <ul class="song-list">
+                <li th:each="cancion : ${canciones}" class="song-item">
+                    <span th:text="${cancion.nombre}"></span>
+                    <button 
+                        type="submit"
+                        th:value="${cancion.id}"
+                        name="cancionId"
+                        class="add-button"
+                    >
+                        Agregar
+                    </button>
+                </li>
+            </ul>
+        </form>
+    </div>
+    <script defer>
+        const form = document.getElementById("form")
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault()
+
+        })
+    </script>
+</body>
+</html>

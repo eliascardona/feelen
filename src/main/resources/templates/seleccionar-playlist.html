@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Seleccionar Playlist</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #111;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        header {
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding: 10px 20px;
+            background-color: #0e0e0e;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+        }
+        .header-content {
+            flex-grow: 1;
+            text-align: center;
+        }
+        .header-content h1 {
+            color: #00b0ff;
+            font-size: 2rem;
+            margin: 0;
+            letter-spacing: 4px;
+        }
+        header img {
+            width: 150px;
+            margin-left: 20px;
+        }
+        .back-button {
+            color: #fff;
+            font-size: 30px;
+            text-decoration: none;
+            padding: 10px;
+            background-color: #666;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+        .back-button:hover {
+            background-color: #00b0ff;
+        }
+        .playlist-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            padding-top: 80px;
+        }
+        h1 {
+            color: #00b0ff;
+            font-size: 3rem; 
+            margin-bottom: 2rem;
+            letter-spacing: 4px;
+        }
+        .playlist-grid {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+            z-index: 2;
+        }
+        .playlist-card {
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            position: relative;
+            width: 250px;
+            height: 300px;
+            overflow: hidden;
+        }
+        .playlist-card:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+        .playlist-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            transition: opacity 0.3s ease;
+        }
+        .playlist-card p {
+            color: #bbb;
+            margin-top: 10px;
+            font-size: 1.2rem;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        .footer {
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            text-align: center;
+            padding: 15px 0;
+            background-color: #0e0e0e;
+            color: #888;
+        }
+        /* Efecto visual con figuras geométricas */
+        .geometric-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+        .neuron-line {
+            position: absolute;
+            border-top: 2px solid #00b0ff;
+            width: 100%;
+            height: 2px;
+            top: 0;
+            animation: neuron 6s infinite ease-in-out;
+        }
+        .neuron-line:nth-child(1) {
+            top: 10%;
+            animation-delay: 0s;
+        }
+        .neuron-line:nth-child(2) {
+            top: 30%;
+            animation-delay: 1s;
+        }
+        .neuron-line:nth-child(3) {
+            top: 50%;
+            animation-delay: 2s;
+        }
+        .neuron-line:nth-child(4) {
+            top: 70%;
+            animation-delay: 3s;
+        }
+        .neuron-line:nth-child(5) {
+            top: 90%;
+            animation-delay: 4s;
+        }
+        @keyframes neuron {
+            0% {
+                left: -20%;
+                width: 60%;
+                transform: translateY(0) rotate(0deg);
+            }
+            25% {
+                left: 10%;
+                width: 70%;
+                transform: translateY(15%) rotate(45deg);
+            }
+            50% {
+                left: 50%;
+                width: 80%;
+                transform: translateY(-20%) rotate(90deg);
+            }
+            75% {
+                left: 90%;
+                width: 70%;
+                transform: translateY(10%) rotate(135deg);
+            }
+            100% {
+                left: 120%;
+                width: 60%;
+                transform: translateY(0) rotate(180deg);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="javascript:history.back()" class="back-button">←</a>
+        <div class="header-content">
+            <h1>Stay Feelen</h1>
+        </div>
+        <img src="logo.png" alt="Stay Feelen Logo"> <!-- Logo ampliado -->
+    </header>
+
+    <div class="geometric-shapes">
+        <div class="neuron-line"></div>
+        <div class="neuron-line"></div>
+        <div class="neuron-line"></div>
+        <div class="neuron-line"></div>
+        <div class="neuron-line"></div>
+    </div>
+
+    <div class="playlist-container">
+        <h1>Selecciona una Playlist</h1>
+        <div class="playlist-grid">
+            <a th:href="@{/menu/playlist-detalle/Feliz}" class="playlist-card">
+                <img src="images/feliz.jpg" alt="Feliz">
+                <p>Feliz</p>
+            </a>
+            <a th:href="@{/menu/playlist-detalle/Triste}" class="playlist-card">
+                <img src="images/triste.jpg" alt="Triste">
+                <p>Triste</p>
+            </a>
+            <a th:href="@{/menu/playlist-detalle/Agresivo}" class="playlist-card">
+                <img src="images/agresivo.jpg" alt="Agresivo">
+                <p>Agresivo</p>
+            </a>
+            <a th:href="@{/menu/playlist-detalle/Amor}" class="playlist-card">
+                <img src="images/amor.jpg" alt="Amor">
+                <p>Amor</p>
+            </a>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2025 Stay Feelen. Todos los derechos reservados.</p>
+    </div>
+
+</body>
+</html>
